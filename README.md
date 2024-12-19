@@ -1,29 +1,7 @@
-# **YourContract & MonadToken Project**
-
-This project is a Solidity-based smart contract implementation forked from **ScaffoldETH2**. It features a **token wallet** contract (`YourContract.sol`) and an **ERC20 token** contract (`MonadToken.sol`). A **Foundry test suite** is also provided to ensure the contracts function as expected.
-
+# **Monad Solidity Challenge #1 Submission**
 ---
-
-## **Project Structure**
-
-```
-simple-token-wallet-challenge/
-│
-├── contracts/
-│   ├── YourContract.sol          # Token Wallet contract
-│   ├── MonadToken.sol            # ERC20 Token contract
-│
-├── test/
-│   └── YourContract.t.sol        # Foundry test suite
-│
-├── lib/                          # Dependencies (e.g., OpenZeppelin, Forge std libraries)
-│
-├── foundry.toml                  # Foundry configuration
-└── README.md                     # Project documentation
-```
-
----
-
+![img1](ss1.png)
+![img2](ss2.png)
 ## **Overview of the Contracts**
 
 ### 1. **YourContract.sol**
