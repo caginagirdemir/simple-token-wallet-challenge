@@ -1,7 +1,6 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-// Useful for debugging. Remove when deploying to a live network.
 import "forge-std/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -30,12 +29,8 @@ contract YourContract {
     function deposit(address _token, uint256 _amount) external {
         require(_amount > 0, "Amount must be greater than zero");
         IERC20 token = IERC20(_token);
-
-    
         require(token.transferFrom(msg.sender, address(this), _amount), "Token transfer failed");
-
         userBalances[msg.sender][_token] += _amount;
-
         emit Deposited(msg.sender, _token, _amount);
     }
 
@@ -43,12 +38,9 @@ contract YourContract {
     function withdraw(address _token, uint256 _amount) external {
         require(_amount > 0, "Amount must be greater than zero");
         require(userBalances[msg.sender][_token] >= _amount, "Insufficient balance");
-
         IERC20 token = IERC20(_token);
-
         userBalances[msg.sender][_token] -= _amount;
         require(token.transfer(msg.sender, _amount), "Token transfer failed");
-
         emit Withdrawn(msg.sender, _token, _amount);
     }
 
