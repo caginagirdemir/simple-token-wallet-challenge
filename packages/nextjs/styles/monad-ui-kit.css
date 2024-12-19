@@ -1,0 +1,41 @@
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('assets/fonts/Ubuntu-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.button-radius {
+    border-radius: 1px; 
+  }
+  
+.text-ubuntu-bold {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.text-monad-purple {
+    color: #836EF9;
+}
+  
+.text-monad-dark-blue {
+    color: #200052;
+}
+  
+.text-electric-ice {
+    color: #5FEDDF;
+}
+  
+.text-berry{
+    color: #A0055D;
+}
+
+.text-berry{
+    color: #61004F;
+}
+
+.bg-monad-1 {
+    background: linear-gradient(135deg, #2b1d8d, #743f97, #d85a9e);
+}

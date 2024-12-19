@@ -3,86 +3,61 @@ pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "forge-std/console.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
 
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
+
 contract YourContract {
-  // State Variables
-  address public immutable owner;
-  string public greeting = "Building Unstoppable Apps!!!";
-  bool public premium = false;
-  uint256 public totalCounter = 0;
-  mapping(address => uint256) public userGreetingCounter;
+  address public owner;
 
-  // Events: a way to emit log statements from smart contract that can be listened to by external parties
-  event GreetingChange(
-    address indexed greetingSetter,
-    string newGreeting,
-    bool premium,
-    uint256 value
-  );
+    
+    mapping(address => mapping(address => uint256)) public userBalances;
 
-  // Constructor: Called once on contract deployment
-  // Check packages/foundry/deploy/Deploy.s.sol
-  constructor(
-    address _owner
-  ) {
-    owner = _owner;
-  }
+  
+    event Deposited(address indexed user, address indexed token, uint256 amount);
+    event Withdrawn(address indexed user, address indexed token, uint256 amount);
 
-  // Modifier: used to define a set of rules that must be met before or after a function is executed
-  // Check the withdraw() function
-  modifier isOwner() {
-    // msg.sender: predefined variable that represents address of the account that called the current function
-    require(msg.sender == owner, "Not the Owner");
-    _;
-  }
-
-  /**
-   * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
-   *
-   * @param _newGreeting (string memory) - new greeting to save on the contract
-   */
-  function setGreeting(
-    string memory _newGreeting
-  ) public payable {
-    // Print data to the anvil chain console. Remove when deploying to a live network.
-
-    console.logString("Setting new greeting");
-    console.logString(_newGreeting);
-
-    greeting = _newGreeting;
-    totalCounter += 1;
-    userGreetingCounter[msg.sender] += 1;
-
-    // msg.value: built-in global variable that represents the amount of ether sent with the transaction
-    if (msg.value > 0) {
-      premium = true;
-    } else {
-      premium = false;
+  
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the owner");
+        _;
     }
 
-    // emit: keyword used to trigger an event
-    emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, msg.value);
-  }
+    constructor() {
+        owner = msg.sender;
+    }
 
-  /**
-   * Function that allows the owner to withdraw all the Ether in the contract
-   * The function can only be called by the owner of the contract as defined by the isOwner modifier
-   */
-  function withdraw() public isOwner {
-    (bool success,) = owner.call{ value: address(this).balance }("");
-    require(success, "Failed to send Ether");
-  }
+    function deposit(address _token, uint256 _amount) external {
+        require(_amount > 0, "Amount must be greater than zero");
+        IERC20 token = IERC20(_token);
 
-  /**
-   * Function that allows the contract to receive ETH
-   */
-  receive() external payable { }
+    
+        require(token.transferFrom(msg.sender, address(this), _amount), "Token transfer failed");
+
+        userBalances[msg.sender][_token] += _amount;
+
+        emit Deposited(msg.sender, _token, _amount);
+    }
+
+
+    function withdraw(address _token, uint256 _amount) external {
+        require(_amount > 0, "Amount must be greater than zero");
+        require(userBalances[msg.sender][_token] >= _amount, "Insufficient balance");
+
+        IERC20 token = IERC20(_token);
+
+        userBalances[msg.sender][_token] -= _amount;
+        require(token.transfer(msg.sender, _amount), "Token transfer failed");
+
+        emit Withdrawn(msg.sender, _token, _amount);
+    }
+
+    function getBalance(address _user, address _token) external view returns (uint256) {
+        return userBalances[_user][_token];
+    }
+
+    function changeOwner(address newOwner) external onlyOwner {
+        require(newOwner != address(0), "Invalid address");
+        owner = newOwner;
+    }
 }

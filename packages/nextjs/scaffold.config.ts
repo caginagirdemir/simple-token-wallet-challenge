@@ -10,7 +10,16 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.foundry],
+  targetNetworks: [
+    {
+      id: 31337, // Foundry/Anvil Local Chain ID
+      name: "Codespace Anvil",
+      rpcUrls: {
+        default: { http: ["https://verbose-space-invention-4wp4q5jvwp5h99p-8545.app.github.dev/"] }, // Public URL
+      },
+      nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+    },
+  ],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
