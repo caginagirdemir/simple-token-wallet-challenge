@@ -85,8 +85,24 @@ forge test
 When the tests run successfully, you should see output like:
 
 ```
-[PASS] testDeposit() (gas: 123456)
-✅ testDeposit completed successfully.
+Ran 1 test for test/YourContract.t.sol:YourContractTest
+[PASS] testDeposit() (gas: 85549)
+Logs:
+  🔧 Setting up the test environment...
+  🚀 Deploying YourContract and MockERC20...
+  💸 Transferring 100 MTK to user1...
+  ✅ Setup completed.
+  🔎 Running testDeposit...
+  👤 Starting prank as user1...
+  🔐 Approving YourContract to spend 50 MTK...
+  💾 Depositing 50 MTK to YourContract...
+  📊 Checking balance in YourContract...
+  User1's balance in YourContract: 50000000000000000000
+  ✅ testDeposit completed successfully.
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 856.60µs (281.74µs CPU time)
+
+Ran 1 test suite in 29.78ms (856.60µs CPU time): 1 tests passed, 0 failed, 0 skipped (1 total tests)
 ```
 
 ---
