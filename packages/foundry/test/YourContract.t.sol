@@ -36,25 +36,90 @@ contract YourContractTest is Test {
         console.log(string(abi.encodePacked(unicode"✅ Setup completed.")));
     }
 
+    /// @notice Test Deposit Functionality
     function testDeposit() public {
         console.log(string(abi.encodePacked(unicode"🔎 Running testDeposit...")));
 
-        console.log(string(abi.encodePacked(unicode"👤 Starting prank as user1...")));
         vm.startPrank(user1);
-
-        console.log(string(abi.encodePacked(unicode"🔐 Approving YourContract to spend 50 MTK...")));
         token.approve(address(yourContract), 50 * 10**18);
 
-        console.log(string(abi.encodePacked(unicode"💾 Depositing 50 MTK to YourContract...")));
+        yourContract.deposit(address(token), 50 * 10**18);
+        uint256 balance = yourContract.getBalance(user1, address(token));
+
+        assertEq(balance, 50 * 10**18, "User1 balance should be 50 MTK");
+        console.log(string(abi.encodePacked(unicode"✅ testDeposit completed successfully.")));
+        vm.stopPrank();
+    }
+
+    /// @notice Test Withdraw Functionality
+    function testWithdraw() public {
+        console.log(string(abi.encodePacked(unicode"🔎 Running testWithdraw...")));
+
+        vm.startPrank(user1);
+        token.approve(address(yourContract), 50 * 10**18);
+
+        // Deposit 50 MTK
+        yourContract.deposit(address(token), 50 * 10**18);
+        uint256 balanceBefore = yourContract.getBalance(user1, address(token));
+
+        // Withdraw 30 MTK
+        yourContract.withdraw(address(token), 30 * 10**18);
+        uint256 balanceAfter = yourContract.getBalance(user1, address(token));
+
+        assertEq(balanceBefore, 50 * 10**18, "Balance before withdraw should be 50 MTK");
+        assertEq(balanceAfter, 20 * 10**18, "Balance after withdrawing 30 MTK should be 20 MTK");
+
+        console.log(string(abi.encodePacked(unicode"✅ testWithdraw completed successfully.")));
+        vm.stopPrank();
+    }
+
+    /// @notice Test getBalance Functionality
+    function testGetBalance() public {
+        console.log(string(abi.encodePacked(unicode"🔎 Running testGetBalance...")));
+
+        vm.startPrank(user1);
+        token.approve(address(yourContract), 50 * 10**18);
+
+        // Deposit 50 MTK
         yourContract.deposit(address(token), 50 * 10**18);
 
         uint256 balance = yourContract.getBalance(user1, address(token));
-        console.log(string(abi.encodePacked(unicode"📊 Checking balance in YourContract...")));
-        console.log("User1's balance in YourContract:", balance);
+        assertEq(balance, 50 * 10**18, "User1's balance should be 50 MTK");
 
-        assertEq(balance, 50 * 10**18, "User1 balance should be 50 MTK");
+        console.log(string(abi.encodePacked(unicode"✅ testGetBalance completed successfully.")));
+        vm.stopPrank();
+    }
 
-        console.log(string(abi.encodePacked(unicode"✅ testDeposit completed successfully.")));
+    /// @notice Test Edge Case: Withdraw More Than Balance
+    function testWithdrawMoreThanBalance() public {
+        console.log(string(abi.encodePacked(unicode"🔎 Running testWithdrawMoreThanBalance...")));
+
+        vm.startPrank(user1);
+        token.approve(address(yourContract), 50 * 10**18);
+
+        // Deposit 50 MTK
+        yourContract.deposit(address(token), 50 * 10**18);
+
+        // Attempt to withdraw 60 MTK
+        vm.expectRevert("Insufficient balance");
+        yourContract.withdraw(address(token), 60 * 10**18);
+
+        console.log(string(abi.encodePacked(unicode"✅ testWithdrawMoreThanBalance reverted as expected.")));
+        vm.stopPrank();
+    }
+
+    /// @notice Test Edge Case: Deposit 0 Amount
+    function testDepositZeroAmount() public {
+        console.log(string(abi.encodePacked(unicode"🔎 Running testDepositZeroAmount...")));
+
+        vm.startPrank(user1);
+        token.approve(address(yourContract), 0);
+
+        // Attempt to deposit 0 MTK
+        vm.expectRevert("Amount must be greater than zero");
+        yourContract.deposit(address(token), 0);
+
+        console.log(string(abi.encodePacked(unicode"✅ testDepositZeroAmount reverted as expected.")));
         vm.stopPrank();
     }
 }
