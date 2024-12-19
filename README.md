@@ -38,45 +38,6 @@ Located in `test/YourContract.t.sol`.
   4. Deposit tokens into the wallet contract.
   5. Verify the user’s token balance in the wallet.
 
----
-
-## **Setup and Build**
-
-Follow these steps to set up and build the project:
-
-### **1. Clone the Repository**
-```bash
-git clone <repository-url>
-cd simple-token-wallet-challenge
-```
-
-### **2. Install Dependencies**
-Ensure **Foundry** is installed. If not, install it:
-
-```bash
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
-```
-
-Install libraries such as OpenZeppelin:
-
-```bash
-forge install openzeppelin/openzeppelin-contracts
-```
-
-### **3. Build the Contracts**
-Run the following command to compile the contracts:
-
-```bash
-forge build
-```
-
-### **4. Run Tests**
-Execute the test suite with:
-
-```bash
-forge test
-```
 
 ---
 
@@ -134,22 +95,6 @@ Logs:
 Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 1.41ms (1.39ms CPU time)
 
 Ran 1 test suite in 12.81ms (1.41ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
-```
-
----
-
-## **Contract Deployment (Optional)**
-
-You can deploy these contracts to a local or live blockchain using Foundry's `forge create` command or tools like Hardhat or Remix.
-
-**Deploy `YourContract`**:
-```bash
-forge create --rpc-url <rpc-url> --private-key <your-private-key> YourContract
-```
-
-**Deploy `MonadToken`**:
-```bash
-forge create --rpc-url <rpc-url> --private-key <your-private-key> MonadToken
 ```
 
 ---

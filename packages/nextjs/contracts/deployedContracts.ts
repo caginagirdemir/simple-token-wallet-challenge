@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     YourContract: {
-      address: "0xf7cd8fa9b94db2aa972023b379c7f72c65e4de9d",
+      address: "0x8ce361602b935680e8dec218b820ff5056beb7af",
       abi: [
         {
           type: "constructor",
@@ -178,7 +178,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     MonadToken: {
-      address: "0x12975173b87f7595ee45dffb2ab812ece596bf84",
+      address: "0xe1aa25618fa0c7a1cfdab5d6b456af611873b629",
       abi: [
         {
           type: "constructor",
@@ -219,7 +219,7 @@ const deployedContracts = {
               internalType: "address",
             },
             {
-              name: "value",
+              name: "amount",
               type: "uint256",
               internalType: "uint256",
             },
@@ -264,6 +264,54 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "decreaseAllowance",
+          inputs: [
+            {
+              name: "spender",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "subtractedValue",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "increaseAllowance",
+          inputs: [
+            {
+              name: "spender",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "addedValue",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
         },
         {
           type: "function",
@@ -314,7 +362,7 @@ const deployedContracts = {
               internalType: "address",
             },
             {
-              name: "value",
+              name: "amount",
               type: "uint256",
               internalType: "uint256",
             },
@@ -343,7 +391,7 @@ const deployedContracts = {
               internalType: "address",
             },
             {
-              name: "value",
+              name: "amount",
               type: "uint256",
               internalType: "uint256",
             },
@@ -407,98 +455,16 @@ const deployedContracts = {
           ],
           anonymous: false,
         },
-        {
-          type: "error",
-          name: "ERC20InsufficientAllowance",
-          inputs: [
-            {
-              name: "spender",
-              type: "address",
-              internalType: "address",
-            },
-            {
-              name: "allowance",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "needed",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "ERC20InsufficientBalance",
-          inputs: [
-            {
-              name: "sender",
-              type: "address",
-              internalType: "address",
-            },
-            {
-              name: "balance",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "needed",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "ERC20InvalidApprover",
-          inputs: [
-            {
-              name: "approver",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "ERC20InvalidReceiver",
-          inputs: [
-            {
-              name: "receiver",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "ERC20InvalidSender",
-          inputs: [
-            {
-              name: "sender",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "ERC20InvalidSpender",
-          inputs: [
-            {
-              name: "spender",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
       ],
       inheritedFunctions: {
         allowance: "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         approve: "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         balanceOf: "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         decimals: "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        decreaseAllowance:
+          "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        increaseAllowance:
+          "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         name: "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         symbol: "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         totalSupply:
