@@ -22,15 +22,6 @@
 
 ---
 
-## **Testing the Project**
-
-```bash
-yarn chain
-yarn deploy
-yarn start
-```
-
-
 This project uses **Foundry** for testing. The test suite verifies key functionalities like token deposit, balance checks, and token approval.
 
 ### **Test File: YourContract.t.sol**
